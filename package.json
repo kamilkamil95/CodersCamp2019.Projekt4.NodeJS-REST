@@ -21,10 +21,12 @@
   "homepage": "https://github.com/nowakprojects/CodersCamp2019.Projekt4.NodeJS-RestAPI#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "compression": "^1.7.4",
     "config": "^3.2.4",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "fawn": "^2.1.5",
+    "helmet": "^3.21.2",
     "joi": "^14.3.1",
     "joi-objectid": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
@@ -45,8 +47,10 @@
     "@types/mongoose": "^5.5.32",
     "@types/node": "^12.12.14",
     "@types/nodemon": "^1.19.0",
+    "@types/supertest": "^2.0.8",
     "jest": "^24.9.0",
     "nodemon": "^2.0.1",
+    "supertest": "^4.0.2",
     "ts-node": "^8.5.4",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.2"
