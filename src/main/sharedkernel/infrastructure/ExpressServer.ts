@@ -1,37 +1,20 @@
 import express, {NextFunction, Request, Response} from 'express';
 import * as UserProfile from "../../userprofile/presentation/UserProfileRoutes";
 import RestApiException from "../presentation/rest/RestApiException";
-import {InMemoryUserProfileRepository} from "../../userprofile/infrastructure/inmemory/InMemoryUserProfileRepository";
 import {UserProfileService} from "../../userprofile/application/UserProfileService";
-import {MongoUserProfileRepository} from "../../userprofile/infrastructure/mongodb/MongoUserProfileRepository";
-import {newDatabase} from "./inmemorymongodb/InMemoryMongoDb";
-import mongoose from "mongoose";
+import {DatabaseMode} from "./DatabaseMode";
+import {RepositoriesRegistry} from "./dependencyinjection/RepositoriesRegistry";
 
-export enum DatabaseMode {
-    IN_MEMORY_LISTS,
-    IN_MEMORY_MONGODB,
-    EXTERNAL_MONGODB
-}
 
 export namespace ExpressServer {
 
     const DEFAULT_PORT_NUMBER: number = 3000;
 
-    const databaseMode = DatabaseMode.IN_MEMORY_MONGODB;
+    const databaseMode = DatabaseMode.IN_MEMORY_LISTS;
 
-    const inMemoryRepositories = false;//databaseMode === DatabaseMode.IN_MEMORY_LISTS; //TODO: Exclude to configuration: mongodb / in-memory
+    const repositoriesRegistry = RepositoriesRegistry.forMode(databaseMode);
 
-    if (databaseMode === DatabaseMode.IN_MEMORY_MONGODB) {
-        newDatabase()
-            .then(connectionString => {
-                mongoose.connect(connectionString)
-                    .then(() => console.log(`MongoDb Connected on: ${connectionString}`));
-            })
-    }
-
-    const userProfileService = new UserProfileService(
-        inMemoryRepositories ? new InMemoryUserProfileRepository() : new MongoUserProfileRepository()
-    );
+    const userProfileService = new UserProfileService(repositoriesRegistry.userProfile);
 
     const routes: { endpoint: string, router: express.Router }[] = [
         {
