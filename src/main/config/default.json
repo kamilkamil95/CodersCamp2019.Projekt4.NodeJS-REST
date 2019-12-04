@@ -1,7 +1,0 @@
-{
-  "server": {
-    "port": 4000
-  },
-  "jwtPrivateKey": "",
-  "db": "mongodb://localhost/vidly"
-}
