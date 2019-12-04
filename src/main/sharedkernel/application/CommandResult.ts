@@ -1,4 +1,4 @@
-import {isDefined, isNotDefined} from "../../utils";
+import {isNotDefined} from "../../utils";
 
 export interface CommandResult {
     isSuccess(): boolean
@@ -9,7 +9,7 @@ export namespace CommandResult {
     export class Success implements CommandResult {
         private static _instance?: Success;
 
-        static get instance() {
+        static get instance(): Success {
             if (isNotDefined(Success._instance)) {
                 Success._instance = new Success();
             }

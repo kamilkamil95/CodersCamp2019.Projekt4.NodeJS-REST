@@ -1,11 +1,5 @@
-import express from 'express';
+import {ExpressServer} from "./sharedkernel/infrastructure/ExpressServer";
+import {isDefined} from "./utils";
 
-console.log("Hello from TS!");
-
-const app = express();
-
-app.get("/", (req,res) => {
-    res.send('Hello World');
-});
-
-app.listen(5000, () => console.log('Server running!'));
+const port = isDefined(process.env.PORT) ? parseInt(process.env.PORT) : undefined;
+ExpressServer.start(port);
