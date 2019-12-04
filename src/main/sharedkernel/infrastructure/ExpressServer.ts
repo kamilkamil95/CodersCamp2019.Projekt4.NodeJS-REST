@@ -2,6 +2,7 @@ import express, {NextFunction, Request, Response} from 'express';
 import * as UserProfile from "../../userprofile/presentation/UserProfileRoutes";
 import RestApiException from "../presentation/rest/RestApiException";
 import {InMemoryUserProfileRepository} from "../../userprofile/infrastructure/inmemory/InMemoryUserProfileRepository";
+import {UserProfileService} from "../../userprofile/application/UserProfileService";
 
 export namespace ExpressServer {
 
@@ -10,7 +11,7 @@ export namespace ExpressServer {
     const routes: { endpoint: string, router: express.Router }[] = [
         {
             endpoint: UserProfile.ROUTE_URL,
-            router: UserProfile.default(new InMemoryUserProfileRepository())
+            router: UserProfile.default(new UserProfileService(new InMemoryUserProfileRepository()))
         }
     ];
 

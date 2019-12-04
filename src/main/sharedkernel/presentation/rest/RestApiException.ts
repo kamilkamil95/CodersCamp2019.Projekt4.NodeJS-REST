@@ -1,3 +1,5 @@
+import {ErrorCode} from "../../domain/ErrorCode";
+
 /**
  * Should be thrown from rest routes and be returned to API client with proper code, message and HTTP status.
  */
@@ -10,9 +12,3 @@ export default class RestApiException extends Error {
     }
 }
 
-export enum ErrorCode {
-    UNKNOWN = 'UNKNOWN',
-    USER_PROFILE_NOT_FOUND = 'USER_PROFILE_NOT_FOUND',
-    USER_ALREADY_EXISTS = 'USER_ALREADY_EXISTS',
-    VALIDATION_ERROR = 'VALIDATION_ERROR'
-}

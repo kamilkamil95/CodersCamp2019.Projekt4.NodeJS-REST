@@ -13,6 +13,13 @@ export class InMemoryUserProfileRepository implements UserProfileRepository {
             : Promise.reject(new Error("Not found!"));
     }
 
+    findById(id: string): Promise<UserProfile> {
+        const found = this.repository.find(it => it.id === id);
+        return isDefined(found)
+            ? Promise.resolve(found)
+            : Promise.reject(new Error("Not found!"));
+    }
+
     save(userProfile: UserProfile): Promise<UserProfile> {
         const alreadyExists = this.repository.find(it => it.id === userProfile.id || it.username === userProfile.username || it.email === userProfile.email)
         if (alreadyExists) {

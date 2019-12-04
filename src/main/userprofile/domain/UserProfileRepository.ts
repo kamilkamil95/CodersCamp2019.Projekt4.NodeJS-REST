@@ -5,6 +5,8 @@ import {UserProfile} from "./UserProfile";
  * mongoDB do uruchomienia.
  */
 export interface UserProfileRepository {
+    findById(id: string): Promise<UserProfile>
+
     findByUsername(username: string): Promise<UserProfile>
 
     save(userProfile: UserProfile): Promise<UserProfile>

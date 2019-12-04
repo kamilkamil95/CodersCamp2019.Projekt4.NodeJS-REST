@@ -4,6 +4,11 @@ import * as mongoose from "mongoose";
 
 export class MongoUserProfileRepository implements UserProfileRepository {
 
+    findById(id: string): Promise<UserProfile> {
+        return MongoUser.findById(id)
+            .then(it => (it as unknown) as UserProfile)
+    }
+
     findByUsername(username: string): Promise<UserProfile> {
         return MongoUser.findOne({username: username})
             .then(it => (it as unknown) as UserProfile)

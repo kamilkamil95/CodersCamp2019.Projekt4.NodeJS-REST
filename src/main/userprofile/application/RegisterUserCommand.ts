@@ -1,5 +1,5 @@
-type RegisterUserCommand = {
+export type RegisterUserCommand = {
+    id: string,
     username: string,
-    email: string,
-    password: string
+    email: string
 }
