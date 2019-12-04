@@ -3,15 +3,40 @@ import * as UserProfile from "../../userprofile/presentation/UserProfileRoutes";
 import RestApiException from "../presentation/rest/RestApiException";
 import {InMemoryUserProfileRepository} from "../../userprofile/infrastructure/inmemory/InMemoryUserProfileRepository";
 import {UserProfileService} from "../../userprofile/application/UserProfileService";
+import {MongoUserProfileRepository} from "../../userprofile/infrastructure/mongodb/MongoUserProfileRepository";
+import {newDatabase} from "./inmemorymongodb/InMemoryMongoDb";
+import mongoose from "mongoose";
+
+export enum DatabaseMode {
+    IN_MEMORY_LISTS,
+    IN_MEMORY_MONGODB,
+    EXTERNAL_MONGODB
+}
 
 export namespace ExpressServer {
 
     const DEFAULT_PORT_NUMBER: number = 3000;
 
+    const databaseMode = DatabaseMode.IN_MEMORY_MONGODB;
+
+    const inMemoryRepositories = false;//databaseMode === DatabaseMode.IN_MEMORY_LISTS; //TODO: Exclude to configuration: mongodb / in-memory
+
+    if (databaseMode === DatabaseMode.IN_MEMORY_MONGODB) {
+        newDatabase()
+            .then(connectionString => {
+                mongoose.connect(connectionString)
+                    .then(() => console.log(`MongoDb Connected on: ${connectionString}`));
+            })
+    }
+
+    const userProfileService = new UserProfileService(
+        inMemoryRepositories ? new InMemoryUserProfileRepository() : new MongoUserProfileRepository()
+    );
+
     const routes: { endpoint: string, router: express.Router }[] = [
         {
             endpoint: UserProfile.ROUTE_URL,
-            router: UserProfile.default(new UserProfileService(new InMemoryUserProfileRepository()))
+            router: UserProfile.default(userProfileService)
         }
     ];
 
@@ -20,7 +45,7 @@ export namespace ExpressServer {
         app.use(express.json());
         routes.forEach(it => app.use(`/api${it.endpoint}`, it.router));
         app.use(errorMiddleware);
-        app.listen(port, () => console.log(`Express server listening on port ${3000}`));
+        app.listen(port, () => console.log(`Express server listening on port ${port}`));
         return app;
     }
 
@@ -33,6 +58,7 @@ export namespace ExpressServer {
             const message = error.message || DEFAULT_ERROR_MESSAGE;
             const code = error.errorCode;
             response
+                .status(status)
                 .send({
                     code,
                     message,
@@ -40,6 +66,7 @@ export namespace ExpressServer {
         } else {
             const message = DEFAULT_ERROR_MESSAGE;
             response
+                .status(DEFAULT_ERROR_CODE)
                 .send({
                     message,
                 })
