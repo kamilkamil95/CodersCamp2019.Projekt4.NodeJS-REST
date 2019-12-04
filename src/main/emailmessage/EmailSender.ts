@@ -1,4 +1,4 @@
-import {CommandResult} from "../../sharedkernel/application/CommandResult";
+import {CommandResult} from "../sharedkernel/application/CommandResult";
 
 export interface EmailSender {
 

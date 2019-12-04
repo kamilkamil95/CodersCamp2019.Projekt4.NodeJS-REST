@@ -3,6 +3,7 @@ import {newDatabase} from "../inmemorymongodb/InMemoryMongoDb";
 import mongoose from "mongoose";
 import {InMemoryUserProfileRepository} from "../../../userprofile/infrastructure/inmemory/InMemoryUserProfileRepository";
 import {MongoUserProfileRepository} from "../../../userprofile/infrastructure/mongodb/MongoUserProfileRepository";
+import {UserProfileRepository} from "../../../userprofile/domain/UserProfileRepository";
 
 
 export class RepositoriesRegistry {
@@ -34,7 +35,7 @@ export class RepositoriesRegistry {
         }
     }
 
-    get userProfile() {
+    get userProfile(): UserProfileRepository {
         return this.mode === DatabaseMode.IN_MEMORY_LISTS
             ? new InMemoryUserProfileRepository()
             : new MongoUserProfileRepository()
