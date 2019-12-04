@@ -2,18 +2,13 @@ import express, {NextFunction, Request, Response} from 'express';
 import * as UserProfile from "../../userprofile/presentation/UserProfileRoutes";
 import RestApiException from "../presentation/rest/RestApiException";
 import {UserProfileService} from "../../userprofile/application/UserProfileService";
-import {DatabaseMode} from "./DatabaseMode";
 import {RepositoriesRegistry} from "./dependencyinjection/RepositoriesRegistry";
+import config from "config";
 
 
 export namespace ExpressServer {
 
-    const DEFAULT_PORT_NUMBER: number = 3000;
-
-    const databaseMode = DatabaseMode.IN_MEMORY_LISTS;
-
-    const repositoriesRegistry = RepositoriesRegistry.forMode(databaseMode);
-
+    const repositoriesRegistry = RepositoriesRegistry.init();
     const userProfileService = new UserProfileService(repositoriesRegistry.userProfile);
 
     const routes: { endpoint: string, router: express.Router }[] = [
@@ -23,7 +18,7 @@ export namespace ExpressServer {
         }
     ];
 
-    export function start(port: number = DEFAULT_PORT_NUMBER) {
+    export function start(port: number = config.get<number>("express.server.port")) {
         const app = express();
         app.use(express.json());
         routes.forEach(it => app.use(`/api${it.endpoint}`, it.router));

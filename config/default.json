@@ -1,0 +1,19 @@
+{
+  "express": {
+    "server": {
+      "port": 4000
+    }
+  },
+  "authentication": {
+    "jsonWebToken": {
+      "privateKey": "jwtPrivateKey"
+    }
+  },
+  "database": {
+    "mode" : "embedded_mongo",
+    "mongo": {
+        "uri": "needed only in `external_mongo` database mode"
+    }
+  },
+  "json": "test"
+}
