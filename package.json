@@ -1,0 +1,63 @@
+{
+  "name": "coderscamp2019.projekt4.nodejs-restapi",
+  "version": "1.0.0",
+  "description": "Application for offering rooms and making reservations.",
+  "main": "src/main/index.ts",
+  "scripts": {
+    "start": "ts-node src/main/index.ts",
+    "dev": "nodemon --exec ts-node src/main/index.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nowakprojects/CodersCamp2019.Projekt4.NodeJS-RestAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nowakprojects/CodersCamp2019.Projekt4.NodeJS-RestAPI/issues"
+  },
+  "homepage": "https://github.com/nowakprojects/CodersCamp2019.Projekt4.NodeJS-RestAPI#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.11.0",
+    "compression": "^1.7.4",
+    "config": "^3.2.4",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "fawn": "^2.1.5",
+    "helmet": "^3.21.2",
+    "joi": "^14.3.1",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "mongodb-memory-server": "^6.0.2",
+    "mongoose": "^5.7.13",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^10.0.28-alpha",
+    "@types/compression": "^1.0.1",
+    "@types/config": "^0.0.36",
+    "@types/express": "^4.17.2",
+    "@types/helmet": "^0.0.45",
+    "@types/jest": "^24.0.23",
+    "@types/joi": "^14.3.4",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/lodash": "^4.14.149",
+    "@types/mongoose": "^5.5.32",
+    "@types/node": "^12.12.14",
+    "@types/nodemon": "^1.19.0",
+    "@types/supertest": "^2.0.8",
+    "@types/uuid": "^3.4.6",
+    "jest": "^24.9.0",
+    "nodemon": "^2.0.1",
+    "supertest": "^4.0.2",
+    "ts-node": "^8.5.4",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.2"
+  }
+}
