@@ -17,7 +17,7 @@ export default (userProfileService: UserProfileService) => {
             .catch(e => next(new RestApiException(404, `User profile for username: ${username} not found!`, ErrorCode.USER_PROFILE_NOT_FOUND)));
     });
 
-    router.get('/:_id', async (req, res, next) => {
+    router.get('/:id', async (req, res, next) => {
         const id = req.params.id;
         return userProfileService.findUserProfileById(id)
             .then(foundUser => res.send(foundUser))
