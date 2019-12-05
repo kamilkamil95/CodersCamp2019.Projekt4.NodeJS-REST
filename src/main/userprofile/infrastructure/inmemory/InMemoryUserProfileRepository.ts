@@ -14,14 +14,14 @@ export class InMemoryUserProfileRepository implements UserProfileRepository {
     }
 
     findById(id: string): Promise<UserProfile> {
-        const found = this.repository.find(it => it.id === id);
+        const found = this.repository.find(it => it._id === id);
         return isDefined(found)
             ? Promise.resolve(found)
             : Promise.reject(new Error("Not found!"));
     }
 
     save(userProfile: UserProfile): Promise<UserProfile> {
-        const alreadyExists = this.repository.find(it => it.id === userProfile.id || it.username === userProfile.username || it.email === userProfile.email)
+        const alreadyExists = this.repository.find(it => it._id === userProfile._id || it.username === userProfile.username || it.email === userProfile.email)
         if (alreadyExists) {
             return Promise.reject(new Error("Already saved!"));
         } else {

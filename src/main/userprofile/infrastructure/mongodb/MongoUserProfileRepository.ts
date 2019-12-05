@@ -2,11 +2,15 @@ import {UserProfileRepository} from "../../domain/UserProfileRepository";
 import {UserProfile} from "../../domain/UserProfile";
 import * as mongoose from "mongoose";
 
+/**
+ * EXPLANATION
+ * TypeScript with Mongoose: https://brianflove.com/2016/10/04/typescript-declaring-mongoose-schema-model/
+ */
 export class MongoUserProfileRepository implements UserProfileRepository {
 
     findById(id: string): Promise<UserProfile> {
         return MongoUser.findById(id)
-            .then(it => (it as unknown) as UserProfile)
+            .then(it => it as UserProfile)
     }
 
     findByUsername(username: string): Promise<UserProfile> {
@@ -15,9 +19,9 @@ export class MongoUserProfileRepository implements UserProfileRepository {
     }
 
     save(userProfile: UserProfile): Promise<UserProfile> {
-        const {id, username, email} = userProfile;
+        const {_id, username, email} = userProfile;
         return new MongoUser({
-            _id: id,
+            _id: _id,
             username,
             email
         })
@@ -26,6 +30,8 @@ export class MongoUserProfileRepository implements UserProfileRepository {
     }
 
 }
+
+type MongoUser = UserProfile & mongoose.Document
 
 const userProfileSchema = new mongoose.Schema({
     _id: String,
@@ -45,7 +51,7 @@ const userProfileSchema = new mongoose.Schema({
     }
 });
 
-const MongoUser = mongoose.model('UserProfile', userProfileSchema);
+const MongoUser = mongoose.model<MongoUser>('UserProfile', userProfileSchema);
 
 
 

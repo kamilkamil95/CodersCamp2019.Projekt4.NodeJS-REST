@@ -1,8 +1,8 @@
 import express, {NextFunction, Request, Response} from 'express';
-import * as UserProfile from "../../userprofile/presentation/UserProfileRoutes";
-import RestApiException from "../presentation/rest/RestApiException";
-import {UserProfileService} from "../../userprofile/application/UserProfileService";
-import {RepositoriesRegistry} from "./dependencyinjection/RepositoriesRegistry";
+import * as UserProfile from "./routes/UserProfileRoutes";
+import RestApiException from "./exception/RestApiException";
+import {UserProfileService} from "../userprofile/application/UserProfileService";
+import {RepositoriesRegistry} from "../sharedkernel/infrastructure/dependencyinjection/RepositoriesRegistry";
 import config from "config";
 
 

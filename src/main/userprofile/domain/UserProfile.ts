@@ -1,5 +1,8 @@
-export type UserProfile = {
-    id: string;
-    username: string;
-    email: string;
+export class UserProfile {
+
+    constructor(public _id: string,
+                public username: string,
+                public email: string) {
+    }
+
 }
