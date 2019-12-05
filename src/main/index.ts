@@ -1,3 +1,3 @@
-import {ExpressServer} from "./sharedkernel/infrastructure/ExpressServer";
+import {ExpressServer} from "./restapi/ExpressServer";
 
 ExpressServer.start();

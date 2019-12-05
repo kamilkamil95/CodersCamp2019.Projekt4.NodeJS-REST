@@ -10,9 +10,14 @@
     }
   },
   "database": {
-    "mode" : "embedded_mongo",
-    "mongo": {
-        "uri": "needed only in `external_mongo` database mode"
+    "mode": "embedded_mongo",
+    "external_mongo": {
+      "uri": "needed only in `external_mongo` database mode"
+    },
+    "embedded_mongo": {
+      "port": 5000,
+      "dbName": "codersCampProjekt4",
+      "debug": true
     }
   },
   "json": "test"

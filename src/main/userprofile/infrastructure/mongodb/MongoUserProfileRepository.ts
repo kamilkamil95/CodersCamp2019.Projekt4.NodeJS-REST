@@ -2,30 +2,40 @@ import {UserProfileRepository} from "../../domain/UserProfileRepository";
 import {UserProfile} from "../../domain/UserProfile";
 import * as mongoose from "mongoose";
 
+/**
+ * EXPLANATION
+ * TypeScript with Mongoose: https://brianflove.com/2016/10/04/typescript-declaring-mongoose-schema-model/
+ */
 export class MongoUserProfileRepository implements UserProfileRepository {
 
-    findById(id: string): Promise<UserProfile> {
-        return MongoUser.findById(id)
-            .then(it => (it as unknown) as UserProfile)
+    findById(id: string): Promise<UserProfile | null> {
+        return MongoUser.findById(id).then()
     }
 
-    findByUsername(username: string): Promise<UserProfile> {
-        return MongoUser.findOne({username: username})
-            .then(it => (it as unknown) as UserProfile)
+    async findByUsername(username: string): Promise<UserProfile | null> {
+        return MongoUser.findOne({username: username}).then()
     }
 
     save(userProfile: UserProfile): Promise<UserProfile> {
-        const {id, username, email} = userProfile;
+        const {_id, username, email} = userProfile;
         return new MongoUser({
-            _id: id,
+            _id: _id,
             username,
             email
-        })
-            .save()
-            .then(it => (it as unknown) as UserProfile);
+        }).save()
+    }
+
+    update(userProfile: UserProfile): Promise<UserProfile> {
+        return MongoUser.findByIdAndUpdate(userProfile._id, {
+            firstName: userProfile.firstName,
+            lastName: userProfile.lastName,
+            email: userProfile.email
+        }).then()
     }
 
 }
+
+type MongoUser = UserProfile & mongoose.Document
 
 const userProfileSchema = new mongoose.Schema({
     _id: String,
@@ -42,10 +52,24 @@ const userProfileSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 255,
         unique: true
+    },
+    firstName: {
+        type: String,
+        required: false,
+        minlength: 3,
+        maxlength: 64,
+        unique: false
+    },
+    lastName: {
+        type: String,
+        required: false,
+        minlength: 3,
+        maxlength: 64,
+        unique: false
     }
 });
 
-const MongoUser = mongoose.model('UserProfile', userProfileSchema);
+const MongoUser = mongoose.model<MongoUser>('UserProfile', userProfileSchema);
 
 
 

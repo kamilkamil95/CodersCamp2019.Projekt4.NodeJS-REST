@@ -1,9 +1,9 @@
 import express, {NextFunction, Request, Response} from 'express';
-import * as UserProfile from "../../userprofile/presentation/UserProfileRoutes";
-import RestApiException from "../presentation/rest/RestApiException";
-import {UserProfileService} from "../../userprofile/application/UserProfileService";
-import {RepositoriesRegistry} from "./dependencyinjection/RepositoriesRegistry";
+import RestApiException from "./exception/RestApiException";
+import {RepositoriesRegistry} from "../sharedkernel/infrastructure/dependencyinjection/RepositoriesRegistry";
 import config from "config";
+import {UserProfileService} from "../userprofile/application/UserProfileService";
+import * as UserProfileRoutes from "./routes/UserProfileRoutes";
 
 
 export namespace ExpressServer {
@@ -13,8 +13,8 @@ export namespace ExpressServer {
 
     const routes: { endpoint: string, router: express.Router }[] = [
         {
-            endpoint: UserProfile.ROUTE_URL,
-            router: UserProfile.default(userProfileService)
+            endpoint: UserProfileRoutes.ROUTE_URL,
+            router: UserProfileRoutes.default(userProfileService)
         }
     ];
 

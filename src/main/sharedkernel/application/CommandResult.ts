@@ -53,7 +53,7 @@ export namespace CommandResult {
 
     export const success = () => Success.instance;
 
-    export const failureDueTo = (reason: any) => new Failure(reason);
+    export const failureDueTo = (reason: any = 'unknown') => new Failure(reason);
 
     export function isSuccess(x: CommandResult): x is Success {
         return x.isSuccess();

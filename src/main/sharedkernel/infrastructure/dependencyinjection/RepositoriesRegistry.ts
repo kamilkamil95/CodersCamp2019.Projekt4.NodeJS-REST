@@ -23,7 +23,7 @@ export class RepositoriesRegistry {
     private initializeDb() {
         switch (this.mode) {
             case DatabaseMode.EXTERNAL_MONGODB: {
-                const connectionString = config.get<string>("database.mongo.uri");
+                const connectionString = config.get<string>("database.external_mongo.uri");
                 mongoose.connect(connectionString)
                     .then(() => console.log(`External MongoDb connected on: ${connectionString}`));
                 break;
