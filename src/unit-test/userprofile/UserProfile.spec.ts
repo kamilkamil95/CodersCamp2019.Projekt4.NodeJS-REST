@@ -8,7 +8,7 @@ import {CommandResult} from "../../main/sharedkernel/application/CommandResult";
 describe('Feature: User Profile', () => {
 
     const idGenerator: DomainObjectIdGenerator = new UuidGenerator();
-    const userProfileService = new UserProfileService(new InMemoryUserProfileRepository()); //TODO: Tests with two implementations!
+    const userProfileService = new UserProfileService(new InMemoryUserProfileRepository());
 
     describe('Given user to create', () => {
 
