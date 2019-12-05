@@ -8,14 +8,12 @@ import * as mongoose from "mongoose";
  */
 export class MongoUserProfileRepository implements UserProfileRepository {
 
-    findById(id: string): Promise<UserProfile> {
-        return MongoUser.findById(id)
-            .then(it => it as UserProfile)
+    findById(id: string): Promise<UserProfile | null> {
+        return MongoUser.findById(id).then()
     }
 
-    findByUsername(username: string): Promise<UserProfile> {
-        return MongoUser.findOne({username: username})
-            .then(it => (it as unknown) as UserProfile)
+    async findByUsername(username: string): Promise<UserProfile | null> {
+        return MongoUser.findOne({username: username}).then()
     }
 
     save(userProfile: UserProfile): Promise<UserProfile> {
@@ -24,9 +22,15 @@ export class MongoUserProfileRepository implements UserProfileRepository {
             _id: _id,
             username,
             email
-        })
-            .save()
-            .then(it => (it as unknown) as UserProfile);
+        }).save()
+    }
+
+    update(userProfile: UserProfile): Promise<UserProfile> {
+        return MongoUser.findByIdAndUpdate(userProfile._id, {
+            firstName: userProfile.firstName,
+            lastName: userProfile.lastName,
+            email: userProfile.email
+        }).then()
     }
 
 }
@@ -48,6 +52,20 @@ const userProfileSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 255,
         unique: true
+    },
+    firstName: {
+        type: String,
+        required: false,
+        minlength: 3,
+        maxlength: 64,
+        unique: false
+    },
+    lastName: {
+        type: String,
+        required: false,
+        minlength: 3,
+        maxlength: 64,
+        unique: false
     }
 });
 

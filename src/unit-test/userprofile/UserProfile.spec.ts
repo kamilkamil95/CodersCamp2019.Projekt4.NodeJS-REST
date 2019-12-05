@@ -1,13 +1,13 @@
 import {UserProfileService} from "../../main/userprofile/application/UserProfileService";
 import {InMemoryUserProfileRepository} from "../../main/userprofile/infrastructure/inmemory/InMemoryUserProfileRepository";
-import {RegisterUser} from "../../main/userprofile/application/RegisterUser";
-import {DomainObjectIdGenerator} from "../../main/sharedkernel/domain/DomainObjectIdGenerator";
+import {RegisterUserProfile} from "../../main/userprofile/application/RegisterUserProfile";
 import {UuidGenerator} from "../../main/sharedkernel/infrastructure/UuidGenerator";
 import {CommandResult} from "../../main/sharedkernel/application/CommandResult";
 
+const id = new UuidGenerator().generate();
+
 describe('Feature: User Profile', () => {
 
-    const idGenerator: DomainObjectIdGenerator = new UuidGenerator();
     const userProfileService = new UserProfileService(new InMemoryUserProfileRepository());
 
     describe('Given user to create', () => {
@@ -19,8 +19,8 @@ describe('Feature: User Profile', () => {
 
 
         describe('When try to register user', () => {
-            const command: RegisterUser = {
-                _id: idGenerator.generate(),
+            const command: RegisterUserProfile = {
+                _id: id,
                 username: given.username,
                 email: given.email
             };
@@ -31,10 +31,10 @@ describe('Feature: User Profile', () => {
 
         });
 
-        describe("And user with was created",  () => {
+        describe("And user with was created", () => {
 
-            const command: RegisterUser = {
-                _id: idGenerator.generate(),
+            const command: RegisterUserProfile = {
+                _id: id,
                 username: given.username,
                 email: given.email
             };
@@ -56,8 +56,8 @@ describe('Feature: User Profile', () => {
             describe("When try to find user by another username", () => {
 
                 it("Then user should not be found", () => {
-                    //TODO: Parsing mongo exception!
-                    //expect(userProfileService.findUserProfileByUsername(given.username)).rejects.
+                    //FIXME: something wrong here!
+                    //return expect(userProfileService.findUserProfileByUsername(given.username)).resolves.toBeNull();
                 })
 
             })

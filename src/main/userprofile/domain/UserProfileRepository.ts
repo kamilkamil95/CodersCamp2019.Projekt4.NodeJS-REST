@@ -5,9 +5,12 @@ import {UserProfile} from "./UserProfile";
  * mongoDB do uruchomienia.
  */
 export interface UserProfileRepository {
-    findById(id: string): Promise<UserProfile>
+    findById(id: string): Promise<UserProfile | null>
 
-    findByUsername(username: string): Promise<UserProfile>
+    findByUsername(username: string): Promise<UserProfile | null>
 
     save(userProfile: UserProfile): Promise<UserProfile>
+
+    update(userProfile: UserProfile): Promise<UserProfile>
+
 }
